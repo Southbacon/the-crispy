@@ -5,11 +5,10 @@ services:
     hostname: crispy-node
     image: node:6.7
     ports:
-      #- "192.168.99.100:80:80"
-      #- "192.168.99.100:443:443"
-    volumes:
+      - "127.0.0.1:80:8888"
+    # volumes:
       # Docroot mapping
-      - "./public:/var/www/html"
+      # - "./public:/var/www/html"
     links:
       - db
     environment:
@@ -20,7 +19,7 @@ services:
     hostname: crispy-mongodb
     image: mongo:3.3.15
     ports:
-      - "192.168.99.100:27017:32768"
+      - "127.0.0.1:27017:32768"
     # DB configuration
     environment:
       - MYSQL_ROOT_PASSWORD=admin123

@@ -28,7 +28,7 @@ fi
 
 
 # Install our box and set up the IP in /etc/hosts.
-if exists docker-machine; then
+if exists docker-compose; then
 	dsh reload
 else
 	echo "Error: `docker-machine` command not found. Aborting install now. Run this script again after installing Docker."
@@ -38,10 +38,10 @@ fi
 
 # Set the IP route in /etc/hosts on the host machine.
 HOSTFILE="/etc/hosts"
-if ! grep --quiet "the-crispy.docker" "$HOSTFILE"; then
+if ! grep --quiet "crispy.docker" "$HOSTFILE"; then
 	echo "Adding DNS to hosts file for crispy.docker."
     sudo cp "$HOSTFILE" "$HOSTFILE".bak
-	sudo -- sh -c -e "echo '\n# Bacon is Crispy...\n192.168.99.100\tcrispy.docker www.crispy.docker' >> /etc/hosts"
+	sudo -- sh -c -e "echo '\n# Bacon is Crispy...\n127.0.0.1\tcrispy.docker www.crispy.docker' >> /etc/hosts"
 	dscacheutil -flushcache
 else
 	echo "DNS information for crispy.docker exists in hosts file. Continuing with installation."
