@@ -1,0 +1,68 @@
+#!/bin/bash
+VERSION="0.1"
+DESCRIPTION="Command/Subcommand line script template"
+
+
+usage() {
+  echo "Usage: $0 [ subcommand [-c num] ] [-v]" 1>&2; exit 1;
+}
+
+
+up() {
+	docker-compose up -d
+}
+
+
+reload() {
+	docker-machine restart
+  docker-machine env
+  eval $(docker-machine env)
+  docker-compose up -d
+  docker exec -it musicaltribble_web_1 a2enmod rewrite
+  docker-compose restart
+}
+
+destroy() {
+  docker rm $(docker ps -q -f status=exited)
+  reload()
+}
+
+
+subcommand() {
+  local OPTIND
+  OPTIND=2
+  while getopts ":c:" opt; do
+    case "${opt}" in
+      c)
+        cl=${OPTARG}
+        echo "${cl}"
+        ;;
+    esac
+  done
+  shift $((OPTIND-1))
+}
+
+
+default() {
+  local OPTIND
+  while getopts ":v" opt; do
+    case "${opt}" in
+      v)
+        echo -e "${DESCRIPTION}, Version v${VERSION}"
+        ;;
+    esac
+  done
+  shift $((OPTIND-1))
+  usage
+}
+
+
+case "$1" in
+  validate)
+    subcommand "$@"
+    ;;
+  *)
+    default "$@"
+    exit 1
+    ;;
+esac
