@@ -3,13 +3,26 @@ VERSION="0.1"
 DESCRIPTION="Command/Subcommand line script template"
 
 
+exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
+
+
 usage() {
-  echo "Usage: $0 [ subcommand [-c num] ] [-v]" 1>&2; exit 1;
+  echo "Usage: dsh" 1>&2; exit 1;
+}
+
+
+st() {
+  docker ps -a
 }
 
 
 up() {
+  open -a Docker
 	docker-compose up -d
+  docker exec -it crispy-mongo mongo admin
 }
 
 
@@ -18,51 +31,24 @@ reload() {
   docker-machine env
   eval $(docker-machine env)
   docker-compose up -d
-  docker exec -it musicaltribble_web_1 a2enmod rewrite
-  docker-compose restart
+  docker run --name crispy-mongo -d mongo --auth
+  docker exec -it crispy-mongo mongo admin
+  #docker-compose restart
 }
 
 destroy() {
+  docker rm crispy-mongo
+  docker rm cripsy-node
+}
+
+cleanup() {
   docker rm $(docker ps -q -f status=exited)
-  reload()
+  dsh reload
 }
 
-
-subcommand() {
-  local OPTIND
-  OPTIND=2
-  while getopts ":c:" opt; do
-    case "${opt}" in
-      c)
-        cl=${OPTARG}
-        echo "${cl}"
-        ;;
-    esac
-  done
-  shift $((OPTIND-1))
-}
-
-
-default() {
-  local OPTIND
-  while getopts ":v" opt; do
-    case "${opt}" in
-      v)
-        echo -e "${DESCRIPTION}, Version v${VERSION}"
-        ;;
-    esac
-  done
-  shift $((OPTIND-1))
-  usage
-}
-
-
-case "$1" in
-  validate)
-    subcommand "$@"
-    ;;
-  *)
-    default "$@"
-    exit 1
-    ;;
-esac
+if exists $1; then
+  $1
+else
+  echo "Subcommand not found: $1"
+  dsh usage
+fi

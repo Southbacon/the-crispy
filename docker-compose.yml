@@ -1,47 +1,32 @@
-# Web node
-web:
-  hostname: web
-  image: node:6.7
-  ports:
-    - "192.168.99.100:80:80"
-    - "192.168.99.100:443:443"
-  volumes:
-    # PHP configuration overrides
-    - "./.docker/php5/php.ini:/etc/php5/fpm/conf.d/z_php.ini"
-    - "./.docker/apache/allow-www.conf:/etc/apache2/conf-enabled/allow-www.conf"
-    # - "./.docker/ssl-certs:/etc/ssl"
-    # Docroot mapping
-    - "./:/var/www/html"
-    # Log mapping
-    # - "./.docker/logs:/var/log"
-  links:
-    - db
-  environment:
-      - VIRTUAL_HOST=tribbles.docker
+version: '2'
+services:
+  # Node
+  node:
+    hostname: crispy-node
+    image: node:6.7
+    ports:
+      #- "192.168.99.100:80:80"
+      #- "192.168.99.100:443:443"
+    volumes:
+      # Docroot mapping
+      - "./public:/var/www/html"
+    links:
+      - db
+    environment:
+        - VIRTUAL_HOST=crispy.docker
 
-# DB node
-db:
-  hostname: db
-  image: mysql:5.6
-  ports:
-    - "192.168.99.100:3306:3306"
-  # DB configuration
-  environment:
-    - MYSQL_ROOT_PASSWORD=admin123
-    - MYSQL_USER=tribbles
-    - MYSQL_PASSWORD=123
-    - MYSQL_DATABASE=tribbles
-  volumes:
-     # MySQL configuration overrides
-     - "./.docker/mysql/my.cnf:/etc/mysql/conf.d/z_my.cnf"
-
-
-# CLI node
-# cli:
-#   hostname: cli
-#   image: skosm/wpcli
-#   links:
-#     - web
-#     - db
-#   volumes:
-#     - "./.docker/php5/php.ini:/etc/php5/cli/conf.d/z_php.ini"
+  # MongoDB
+  db:
+    hostname: crispy-mongodb
+    image: mongo:3.3.15
+    ports:
+      - "192.168.99.100:27017:32768"
+    # DB configuration
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_USER=crispy
+      - MYSQL_PASSWORD=123
+      - MYSQL_DATABASE=crispy
+    #volumes:
+       # MySQL configuration overrides
+       #- "./.docker/mysql/my.cnf:/etc/mysql/conf.d/z_my.cnf"
