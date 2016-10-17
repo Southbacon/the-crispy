@@ -1,2 +1,2 @@
 # the-crispy
-The Crispy, a bot built for the Southbacon Slack community.
+The Crispy, (aka "El Gato Crispios" in Spanish), is a bot built for the Southbacon Slack community.
