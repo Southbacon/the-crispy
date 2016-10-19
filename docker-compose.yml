@@ -9,6 +9,7 @@ services:
     # volumes:
       # Docroot mapping
       # - "./public:/var/www/html"
+    container_name: crispy-node
     links:
       - db
     environment:

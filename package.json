@@ -1,5 +1,18 @@
 {
+  "name": "the-crispy",
+  "version": "1.0.0",
+  "description": "The Crispy, (aka El Gato Crispios in Spanish), is a bot built for the Southbacon Slack community.",
+  "main": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Southbacon/the-crispy.git"
+  },
+  "author": "The coolest people at Southbacon",
   "dependencies": {
-    "@slack/client": "^3.6.0"
+    "@slack/client": "^3.6.0",
+    "express": "^4.14.0"
   }
 }
