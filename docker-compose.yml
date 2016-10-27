@@ -3,17 +3,17 @@ services:
   # Node
   node:
     hostname: crispy-node
-    image: node:6.7
+    image: crispy-node
     ports:
-      - "127.0.0.1:80:8888"
+      - "127.0.0.1:3000:3000"
     # volumes:
       # Docroot mapping
       # - "./public:/var/www/html"
-    container_name: crispy-node
+    container_name: crispy-node-server
     links:
       - db
     environment:
-        - VIRTUAL_HOST=crispy.docker
+      - VIRTUAL_HOST=crispy.docker
 
   # MongoDB
   db:
@@ -21,6 +21,7 @@ services:
     image: mongo:3.3.15
     ports:
       - "127.0.0.1:27017:32768"
+    container_name: crispy-mongo
     # DB configuration
     environment:
       - MYSQL_ROOT_PASSWORD=admin123
