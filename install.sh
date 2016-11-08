@@ -18,18 +18,19 @@ fi
 
 
 # Download dependent container images.
-if exists docker; then
-	docker pull node
-	docker pull mongo
-else
-	echo "Error: `docker` command not found. Aborting install now. Run this script again after installing Docker."
-	exit 1;
-fi
+# if exists docker; then
+	# docker pull node
+	# docker pull mongo
+# else
+#	echo "Error: `docker` command not found. Aborting install now. Run this script again after installing Docker."
+#	exit 1;
+# fi
 
 
 # Install our box and set up the IP in /etc/hosts.
 if exists docker-compose; then
-	dsh reload
+	dsh up
+	# dsh reload
 else
 	echo "Error: `docker-machine` command not found. Aborting install now. Run this script again after installing Docker."
 	exit 1;

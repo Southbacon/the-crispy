@@ -21,9 +21,10 @@ st() {
 
 up() {
   open -a Docker
-	docker-compose up -d
-  docker exec -it crispy-mongo mongo admin
+	# docker-compose up -d
+  # docker exec -it crispy-mongo mongo admin
   docker build -t crispy-node .
+  docker-compose up -d
 }
 
 
