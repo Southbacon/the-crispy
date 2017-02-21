@@ -19,6 +19,11 @@ st() {
 }
 
 
+ssh() {
+  docker exec -it crispy-node-server bash
+}
+
+
 up() {
   open -a Docker
   docker build -t crispy-node .
