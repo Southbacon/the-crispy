@@ -9,7 +9,7 @@ exists()
 }
 
 
-Install our box and set up the IP in /etc/hosts.
+# Install our box and set up the IP in /etc/hosts.
 if exists docker-compose; then
 	./bin/dsh up
   docker exec -it crispy-node-server npm install
@@ -19,7 +19,7 @@ else
 fi
 
 
-Set the IP route in /etc/hosts on the host machine.
+# Set the IP route in /etc/hosts on the host machine.
 HOSTFILE="/etc/hosts"
 if ! grep --quiet "crispy.docker" "$HOSTFILE"; then
 	echo "Adding DNS to hosts file for crispy.docker."
