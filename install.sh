@@ -12,7 +12,6 @@ exists()
 # Install our box and set up the IP in /etc/hosts.
 if exists docker-compose; then
 	./bin/dsh up
-  docker exec -it crispy-node-server npm install
 else
 	echo "Error: `docker-machine` command not found. Aborting install now. Run this script again after installing Docker."
 	exit 1;
