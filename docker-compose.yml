@@ -6,9 +6,6 @@ services:
     image: crispy-node
     ports:
       - "127.0.0.1:3000:3000"
-    # volumes:
-      # Docroot mapping
-      # - "./public:/var/www/html"
     container_name: crispy-node-server
     links:
       - db
@@ -28,6 +25,3 @@ services:
       - MYSQL_USER=crispy
       - MYSQL_PASSWORD=123
       - MYSQL_DATABASE=crispy
-    #volumes:
-       # MySQL configuration overrides
-       #- "./.docker/mysql/my.cnf:/etc/mysql/conf.d/z_my.cnf"

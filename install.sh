@@ -8,29 +8,10 @@ exists()
 	command -v "$1" >/dev/null 2>&1
 }
 
-# Set up our dsh script as a local executable file.
-if ! exists dsh; then
-	echo "Adding dsh binary to the path."
-	PATH=$PATH:$(pwd)/bin/
-else
-	echo "DSH command exists. Continuing with installation."
-fi
-
-
-# Download dependent container images.
-# if exists docker; then
-	# docker pull node
-	# docker pull mongo
-# else
-#	echo "Error: `docker` command not found. Aborting install now. Run this script again after installing Docker."
-#	exit 1;
-# fi
-
 
 # Install our box and set up the IP in /etc/hosts.
 if exists docker-compose; then
-	dsh up
-	# dsh reload
+	./bin/dsh up
 else
 	echo "Error: `docker-machine` command not found. Aborting install now. Run this script again after installing Docker."
 	exit 1;

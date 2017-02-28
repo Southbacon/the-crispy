@@ -19,10 +19,13 @@ st() {
 }
 
 
+ssh() {
+  docker exec -it crispy-node-server bash
+}
+
+
 up() {
   open -a Docker
-	# docker-compose up -d
-  # docker exec -it crispy-mongo mongo admin
   docker build -t crispy-node .
   docker-compose up -d
 }
@@ -33,10 +36,6 @@ reload() {
   docker-machine env
   eval $(docker-machine env)
   docker-compose up -d
-  # docker run --name crispy-mongo -d mongo --auth
-  # docker exec -it crispy-mongo mongo admin --rm mongo sh -c 'exec mongo "db.createUser({ user: \"admin\", pwd: \"123\", roles: [ { role: \"admin\", db: \"crispy\" } ] });"'
-  # docker exec -it crispy-mongo mongo admin "db.createUser({ user: 'admin', pwd: '123', roles: [ { role: \"admin\", db: \"crispy\" } ] });"
-  #docker-compose restart
 }
 
 destroy() {
